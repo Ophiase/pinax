@@ -62,3 +62,6 @@ just install-plugin
 ## License
 
 [Apache 2.0](LICENSE)
+
+Formerly **Ganglion**, renamed as **Pinax** so that, next to the author's
+medical projects, it does not read as anatomy.
