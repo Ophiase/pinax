@@ -1,6 +1,6 @@
 ---
-up: "[Ganglion](./README.md)"
-next: "[External](./ganglion-external.md)"
+up: "[Pinax](./README.md)"
+next: "[External](./pinax-external.md)"
 ---
 
 # Naming

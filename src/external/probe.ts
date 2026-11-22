@@ -23,7 +23,7 @@ export async function probe(external: string, name: string): Promise<Probe> {
     return "dangling";
   }
   const manifest = await succeeds(stat(join(path, MANIFEST)));
-  return manifest ? "ganglion" : "other";
+  return manifest ? "pinax" : "other";
 }
 
 export async function probeAll(external: string, names: readonly string[]): Promise<Probes> {
@@ -49,9 +49,9 @@ export async function readText(path: string): Promise<string | null> {
   }
 }
 
-/** The ganglion in a picked folder: the folder itself, or its `ganglion/`. */
-export async function ganglionIn(folder: string): Promise<string | null> {
-  for (const dir of [folder, join(folder, "ganglion")]) {
+/** The pinax in a picked folder: the folder itself, or its `pinax/`. */
+export async function pinaxIn(folder: string): Promise<string | null> {
+  for (const dir of [folder, join(folder, "pinax")]) {
     if (await succeeds(stat(join(dir, MANIFEST)))) {
       return dir;
     }

@@ -1,4 +1,4 @@
-// A ganglion's own ganglion.yaml: the door it opens on, the name it goes by.
+// A pinax's own pinax.yaml: the door it opens on, the name it goes by.
 import { basename } from "node:path";
 import { isEntryName } from "./files.ts";
 import { field, text } from "./yaml.ts";

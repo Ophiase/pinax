@@ -4,20 +4,20 @@ Instructions for any coding agent in this repository. Claude Code reads them
 through `.claude/CLAUDE.md`.
 
 The canon is [.agents/kanon.md](.agents/kanon.md); the `<>` in the README is
-its sign. The `◉` badge marks a ganglion.
+its sign. The `◉` badge marks a pinax.
 
 ## Layout
 
 | Path | What it holds |
 | --- | --- |
-| `ganglion/` | the standard, its own first ganglion |
-| `ganglion/ganglion.just` | the module linking a ganglion into `external/` |
+| `pinax/` | the standard, its own first pinax |
+| `pinax/pinax.just` | the module linking a pinax into `external/` |
 | `src/main.ts` | the plugin: the link wrapper, the commands, the menus |
 | `src/links/` | where a link out of the vault lands, and opening it |
 | `src/registry/` | the two registries and the states; pure, tested |
 | `src/external/` | probing, listing and writing `external/` |
-| `src/commands/` | *Open ganglion*, *Register ganglion*, their dialogs |
-| `src/insert/` | *Insert from ganglion*: a door, a tree, or one note |
+| `src/commands/` | *Open pinax*, *Register pinax*, their dialogs |
+| `src/insert/` | *Insert from pinax*: a door, a tree, or one note |
 | `tests/` | `node --test`: the pure modules, and `external/` on a temp disk |
 | `types/` | declarations for what TypeScript cannot see: `electron` |
 | `dist/main.js` | the bundle, built, never edited, gitignored |
@@ -43,7 +43,7 @@ locally.
   `$OBSIDIAN_VAULT`, exported by `.envrc`; the `update-in-obsidian` skill
   finds the vault when `.envrc` does not name it.
 - Probe `external/` by name; list it, one level, only when asked; never
-  index or watch it. A ganglion's own folder is read only to insert from it.
+  index or watch it. A pinax's own folder is read only to insert from it.
 - Write only the two registries, a link into `external/`, and text at the
   cursor, on the person's action; never rewrite a link in a note.
 - Never a runtime dependency or a network call.
@@ -59,7 +59,7 @@ locally.
 
 - `rumdl check .` passes; lines stay under 80 columns.
 - Lists, one idea per line; no prose walls.
-- Notes in `ganglion/` follow the standard they describe: relative markdown
+- Notes in `pinax/` follow the standard they describe: relative markdown
   links only, no wikilinks, no links out of the folder.
 
 ## Diagrams

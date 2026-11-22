@@ -1,10 +1,10 @@
 import type { App } from "obsidian";
 import { attempt, say } from "../notice.ts";
 import type { Row } from "../registry/index.ts";
-import { GanglionPicker, isReachable, unreachable } from "./picker.ts";
-import type { Ganglions } from "./store.ts";
+import { isReachable, PinaxPicker, unreachable } from "./picker.ts";
+import type { Pinakes } from "./store.ts";
 
-function openRow(store: Ganglions, row: Row): void {
+function openRow(store: Pinakes, row: Row): void {
   if (!isReachable(row)) {
     say(unreachable(row));
     return;
@@ -12,10 +12,10 @@ function openRow(store: Ganglions, row: Row): void {
   void attempt(() => store.open(row));
 }
 
-export async function openGanglion(app: App, store: Ganglions): Promise<void> {
+export async function openPinax(app: App, store: Pinakes): Promise<void> {
   const rows = await store.rows();
   if (rows.length === 0) {
-    throw new Error("no ganglion tracked yet: run Register ganglion");
+    throw new Error("no pinax tracked yet: run Register pinax");
   }
-  new GanglionPicker(app, rows, (row) => openRow(store, row)).open();
+  new PinaxPicker(app, rows, (row) => openRow(store, row)).open();
 }

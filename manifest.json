@@ -1,6 +1,6 @@
 {
-  "id": "ganglion",
-  "name": "Ganglion",
+  "id": "pinax",
+  "name": "Pinax",
   "version": "0.1.0",
   "minAppVersion": "1.14.0",
   "description": "Open relative markdown links that point outside the vault, without indexing them.",

@@ -3,9 +3,9 @@ import { homedir } from "node:os";
 import { remote } from "electron";
 import { type App, type ButtonComponent, Modal, Setting, type TextComponent } from "obsidian";
 import { attempt, say } from "../notice.ts";
-import type { Ganglions } from "./store.ts";
+import type { Pinakes } from "./store.ts";
 
-const HELP = "A ganglion folder, or a project holding ganglion/: it is linked into external/.";
+const HELP = "A pinax folder, or a project holding pinax/: it is linked into external/.";
 
 function expanded(path: string): string {
   const trimmed = path.trim();
@@ -25,13 +25,13 @@ export class FolderPrompt extends Modal {
 
   constructor(
     app: App,
-    private readonly store: Ganglions,
+    private readonly store: Pinakes,
   ) {
     super(app);
   }
 
   override onOpen(): void {
-    this.setTitle("Register a ganglion from disk");
+    this.setTitle("Register a pinax from disk");
     this.contentEl.createEl("p", { text: HELP });
     new Setting(this.contentEl).setName("Folder").addText((field) => this.folderField(field));
     const buttons = new Setting(this.contentEl);

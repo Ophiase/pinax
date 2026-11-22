@@ -1,8 +1,8 @@
-// Insert from ganglion: a link to a ganglion's door, its tree, or one of its
+// Insert from pinax: a link to a pinax's door, its tree, or one of its
 // notes, written at the cursor, relative to the note's folder.
 import { dirname, join, relative } from "node:path";
 import type { App, Editor } from "obsidian";
-import { GanglionPicker, type Ganglions, isReachable, type Place } from "../commands/index.ts";
+import { isReachable, type Pinakes, PinaxPicker, type Place } from "../commands/index.ts";
 import { attempt } from "../notice.ts";
 import type { Row } from "../registry/index.ts";
 import { DepthPrompt, type Mode, ModePicker, NotePicker } from "./dialogs.ts";
@@ -11,12 +11,12 @@ import { walk } from "./walk.ts";
 
 export interface Session {
   readonly app: App;
-  readonly store: Ganglions;
+  readonly store: Pinakes;
   readonly editor: Editor;
   readonly note: string;
 }
 
-/** A ganglion, and `base`: the way from the note's folder to it. */
+/** A pinax, and `base`: the way from the note's folder to it. */
 interface Target extends Place {
   readonly base: string;
 }
@@ -31,7 +31,7 @@ class Insertion {
     return [
       { label: `Door: ${this.target.door}`, run: () => this.door() },
       { label: "Tree: its notes, as a list of links", run: () => this.askDepth() },
-      { label: "Find: one note of the ganglion", run: () => this.find() },
+      { label: "Find: one note of the pinax", run: () => this.find() },
     ];
   }
 
@@ -93,12 +93,12 @@ function chosen(session: Session, row: Row): void {
   void attempt(() => start(session, row));
 }
 
-export async function insertFromGanglion(session: Session): Promise<void> {
+export async function insertFromPinax(session: Session): Promise<void> {
   const rows = await session.store.rows();
   const reachable = rows.filter(isReachable);
   if (reachable.length === 0) {
-    throw new Error("no ganglion reachable here: run Register ganglion");
+    throw new Error("no pinax reachable here: run Register pinax");
   }
-  const picker = new GanglionPicker(session.app, reachable, (row) => chosen(session, row));
+  const picker = new PinaxPicker(session.app, reachable, (row) => chosen(session, row));
   picker.open();
 }

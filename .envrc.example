@@ -1,2 +1,2 @@
 export OBSIDIAN_VAULT="$HOME/path/to/my-vault"
-# export GANGLION_NAME="my-project"
+# export PINAX_NAME="my-project"

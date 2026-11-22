@@ -1,4 +1,4 @@
-mod ganglion "ganglion/ganglion.just"
+mod pinax "pinax/pinax.just"
 
 vault := env("OBSIDIAN_VAULT", "")
 
@@ -23,7 +23,7 @@ rumdl:
 [group("check")]
 [doc("Render every Mermaid block and fail past 875 px wide")]
 diagrams:
-    .agents/checks/diagrams.sh ganglion/*.md
+    .agents/checks/diagrams.sh pinax/*.md
 
 [group("check")]
 [doc("Lint, type-check and test the plugin")]
@@ -56,13 +56,13 @@ build: code
       --external:obsidian --external:electron --external:node:* --outfile=dist/main.js
 
 [group("build")]
-[doc("Copy the build into $OBSIDIAN_VAULT/.obsidian/plugins/ganglion")]
+[doc("Copy the build into $OBSIDIAN_VAULT/.obsidian/plugins/pinax")]
 [script("bash")]
 install-plugin: build
     set -euo pipefail
     [[ -n "{{ vault }}" ]] || { echo "export OBSIDIAN_VAULT=<vault>: see .envrc.example" >&2; exit 1; }
     [[ -d "{{ vault }}/.obsidian" ]] || { echo "OBSIDIAN_VAULT holds no .obsidian" >&2; exit 1; }
-    target="{{ vault }}/.obsidian/plugins/ganglion"
+    target="{{ vault }}/.obsidian/plugins/pinax"
     mkdir -p "$target"
     cp dist/main.js manifest.json "$target/"
     echo "installed: reload Obsidian"

@@ -1,1 +1,1 @@
-export { insertFromGanglion, type Session } from "./insert.ts";
+export { insertFromPinax, type Session } from "./insert.ts";

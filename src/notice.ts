@@ -1,7 +1,7 @@
 import { Notice } from "obsidian";
 
 export function say(message: string): void {
-  new Notice(`Ganglion: ${message}`);
+  new Notice(`Pinax: ${message}`);
 }
 
 function messageOf(error: unknown): string {

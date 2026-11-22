@@ -4,10 +4,10 @@ import { realpath } from "node:fs/promises";
 import { join } from "node:path";
 import type { App } from "obsidian";
 import {
-  ganglionIn,
   linkInto,
   list,
   MANIFEST,
+  pinaxIn,
   probeAll,
   readText,
   writeRegister,
@@ -37,7 +37,7 @@ async function manifestIn(dir: string): Promise<unknown> {
   return parsed(content, MANIFEST);
 }
 
-export class Ganglions {
+export class Pinakes {
   constructor(
     private readonly app: App,
     private readonly vault: string,
@@ -45,19 +45,19 @@ export class Ganglions {
 
   async rows(): Promise<Row[]> {
     const { file, external, confirmed } = await this.load();
-    const names = file.ganglions.map(({ name }) => name);
+    const names = file.pinakes.map(({ name }) => name);
     const probes = await probeAll(external, names);
-    return rowsOf(file.ganglions, confirmed, probes);
+    return rowsOf(file.pinakes, confirmed, probes);
   }
 
   async candidates(): Promise<Candidate[]> {
     const { file, external } = await this.load();
     const entries = await list(external);
     const probes = await probeAll(external, entries.filter(isEntryName));
-    return candidatesOf(probes, file.ganglions);
+    return candidatesOf(probes, file.pinakes);
   }
 
-  /** Opens a ganglion's door; picking an unconfirmed one confirms it. */
+  /** Opens a pinax's door; picking an unconfirmed one confirms it. */
   async open(row: Row): Promise<void> {
     if (row.state === "unconfirmed") {
       await this.confirm(row.name);
@@ -70,7 +70,7 @@ export class Ganglions {
     await openOutside(path);
   }
 
-  /** A ganglion's folder in external/, and its door inside it. */
+  /** A pinax's folder in external/, and its door inside it. */
   async locate(name: string): Promise<Place> {
     const { external } = await this.load();
     const dir = join(external, name);
@@ -86,12 +86,12 @@ export class Ganglions {
   /** Tracks an entry of external/ in the vault, and confirms it here. */
   async register(name: string): Promise<void> {
     const { file } = await this.confirm(name);
-    const tracked = file.ganglions.some((ganglion) => ganglion.name === name);
+    const tracked = file.pinakes.some((pinax) => pinax.name === name);
     if (tracked) {
       return;
     }
-    const ganglions = [...file.ganglions, { name }];
-    await this.app.vault.adapter.write(VAULT_FILE, writeVault({ ...file, ganglions }));
+    const pinakes = [...file.pinakes, { name }];
+    await this.app.vault.adapter.write(VAULT_FILE, writeVault({ ...file, pinakes }));
   }
 
   /** Links a folder from disk into external/, then registers it. */
@@ -99,7 +99,7 @@ export class Ganglions {
     if (!(await exists(picked))) {
       throw new Error(`no folder at ${picked}`);
     }
-    const dir = (await ganglionIn(picked)) ?? picked;
+    const dir = (await pinaxIn(picked)) ?? picked;
     const name = nameOf(await manifestIn(dir), picked);
     const { external } = await this.load();
     await linkInto(external, name, dir);

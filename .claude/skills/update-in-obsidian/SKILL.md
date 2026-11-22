@@ -1,6 +1,6 @@
 ---
 name: update-in-obsidian
-description: Build Ganglion and install it into the user's Obsidian vault, finding the vault when `.envrc` does not name it. Use when the user asks to install, reinstall or update the plugin in their vault, or to try a change in Obsidian.
+description: Build Pinax and install it into the user's Obsidian vault, finding the vault when `.envrc` does not name it. Use when the user asks to install, reinstall or update the plugin in their vault, or to try a change in Obsidian.
 ---
 
 # Update in Obsidian
@@ -16,8 +16,8 @@ Stop at the first source that names one vault.
 1. `OBSIDIAN_VAULT` in the environment or in `.envrc`, if that folder still
    holds a `.obsidian`.
 2. Your memory: a vault path recorded for this machine.
-3. A vault where Ganglion is already installed: a folder holding
-   `.obsidian/plugins/ganglion/manifest.json`. Search the vaults Obsidian
+3. A vault where Pinax is already installed: a folder holding
+   `.obsidian/plugins/pinax/manifest.json`. Search the vaults Obsidian
    knows first, then the home folder.
 4. The vaults Obsidian knows, the `path` of each entry under `vaults` in
    its `obsidian.json`:
@@ -57,5 +57,5 @@ The path never goes into a tracked file or a commit.
 ## 4. Tell the user
 
 Say which vault was updated. Obsidian keeps the old bundle in memory until
-Ganglion is turned off and on again in the community plugins, or the app is
+Pinax is turned off and on again in the community plugins, or the app is
 reloaded: say so, every time.

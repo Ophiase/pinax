@@ -1,8 +1,8 @@
-// The two registries: the vault's ganglions.yaml, what it tracks, and
-// external/.ganglions.yaml, what this machine has confirmed.
+// The two registries: the vault's pinakes.yaml, what it tracks, and
+// external/.pinakes.yaml, what this machine has confirmed.
 import { byText, field, scalar, text } from "./yaml.ts";
 
-/** A ganglion the vault tracks; `source` is shown, never fetched. */
+/** A pinax the vault tracks; `source` is shown, never fetched. */
 export interface Tracked {
   readonly name: string;
   readonly source?: string;
@@ -10,13 +10,13 @@ export interface Tracked {
 
 export interface VaultFile {
   readonly external?: string;
-  readonly ganglions: readonly Tracked[];
+  readonly pinakes: readonly Tracked[];
 }
 
 export const DEFAULT_EXTERNAL = "../external";
 
-const VAULT_HEADER = "# Ganglions this vault tracks: see the Ganglion standard.";
-const REGISTER_HEADER = "# Confirmed ganglions of this external/, one per line.";
+const VAULT_HEADER = "# Pinakes this vault tracks: see the Pinax standard.";
+const REGISTER_HEADER = "# Confirmed pinakes of this external/, one per line.";
 
 /** One entry of external/: no separator, no dot entry, nothing above it. */
 export function isEntryName(name: string): boolean {
@@ -30,7 +30,7 @@ function isValidName(name: string | null): name is string {
 }
 
 function items(data: unknown): readonly unknown[] {
-  const list = field(data, "ganglions");
+  const list = field(data, "pinakes");
   return Array.isArray(list) ? list : [];
 }
 
@@ -51,9 +51,9 @@ function byName(left: Tracked, right: Tracked): number {
 export function trackedOf(data: unknown): Tracked[] {
   const tracked = new Map<string, Tracked>();
   for (const item of items(data)) {
-    const ganglion = trackedOfItem(item);
-    if (ganglion !== null && !tracked.has(ganglion.name)) {
-      tracked.set(ganglion.name, ganglion);
+    const pinax = trackedOfItem(item);
+    if (pinax !== null && !tracked.has(pinax.name)) {
+      tracked.set(pinax.name, pinax);
     }
   }
   return [...tracked.values()].sort(byName);
@@ -67,8 +67,8 @@ export function confirmedOf(data: unknown): string[] {
 
 export function vaultFileOf(data: unknown): VaultFile {
   const external = text(field(data, "external"));
-  const ganglions = trackedOf(data);
-  return external ? { external, ganglions } : { ganglions };
+  const pinakes = trackedOf(data);
+  return external ? { external, pinakes } : { pinakes };
 }
 
 function trackedLines({ name, source }: Tracked): string[] {
@@ -81,19 +81,19 @@ function confirmedLine(name: string): string {
 }
 
 function yamlFile(header: readonly string[], lines: readonly string[]): string {
-  const list = lines.length === 0 ? ["ganglions: []"] : ["ganglions:", ...lines];
+  const list = lines.length === 0 ? ["pinakes: []"] : ["pinakes:", ...lines];
   const all = [...header, ...list];
   return `${all.join("\n")}\n`;
 }
 
-export function writeVault({ external, ganglions }: VaultFile): string {
+export function writeVault({ external, pinakes }: VaultFile): string {
   const moved = external !== undefined && external !== DEFAULT_EXTERNAL;
   const header = moved ? [VAULT_HEADER, `external: ${scalar(external)}`] : [VAULT_HEADER];
-  const lines = trackedOf({ ganglions }).flatMap(trackedLines);
+  const lines = trackedOf({ pinakes }).flatMap(trackedLines);
   return yamlFile(header, lines);
 }
 
 export function writeConfirmed(names: readonly string[]): string {
-  const lines = confirmedOf({ ganglions: names }).map(confirmedLine);
+  const lines = confirmedOf({ pinakes: names }).map(confirmedLine);
   return yamlFile([REGISTER_HEADER], lines);
 }

@@ -1,7 +1,7 @@
 ---
-up: "[Ganglion](./README.md)"
-prev: "[Naming](./ganglion-naming.md)"
-next: "[Folder](./ganglion-folder.md)"
+up: "[Pinax](./README.md)"
+prev: "[Naming](./pinax-naming.md)"
+next: "[Folder](./pinax-folder.md)"
 ---
 
 # External
@@ -19,7 +19,7 @@ flowchart LR
         end
     end
     subgraph projects["disk"]
-        e1["ganglion/: its git"]
+        e1["pinax/: its git"]
         e2["docs/: its git"]
         e3["a file"]
     end
@@ -54,19 +54,19 @@ flowchart LR
 
 - set per machine, with direnv (`.envrc`, gitignored) or any env tool:
   - `OBSIDIAN_VAULT`: the vault; `external/` sits beside it
-  - `GANGLION_NAME`: the entry's name in `external/`, else the project
+  - `PINAX_NAME`: the entry's name in `external/`, else the project
     folder's name
-  - `GANGLION_DIR`: the ganglion folder, else the one holding the module
-- one module, [ganglion.just](./ganglion.just), shipped **inside** the
-  ganglion folder: copy the folder, the installer comes with it
+  - `PINAX_DIR`: the pinax folder, else the one holding the module
+- one module, [pinax.just](./pinax.just), shipped **inside** the
+  pinax folder: copy the folder, the installer comes with it
 - one line in the project's `justfile`:
 
 ```just
-mod ganglion "ganglion/ganglion.just"
+mod pinax "pinax/pinax.just"
 ```
 
-- `just ganglion`: the variables, where `external/` is, and the link
-- `just ganglion install [vault]`, `just ganglion uninstall [vault]`
+- `just pinax`: the variables, where `external/` is, and the link
+- `just pinax install [vault]`, `just pinax uninstall [vault]`
 
 ## Opening from Obsidian
 
@@ -92,7 +92,7 @@ mod ganglion "ganglion/ganglion.just"
 
 | Kind | What | Promise |
 | --- | --- | --- |
-| 🧠 native | a ganglion, with `ganglion.yaml` | this standard |
+| 🧠 native | a pinax, with `pinax.yaml` | this standard |
 | 🌍 foreign | any project's `docs/` | none, read as is |
 | 📄 file | a one-way copy, **by hand** | no reconciliation |
 

@@ -5,7 +5,7 @@ import { type App, parseYaml } from "obsidian";
 import { externalOf, REGISTER, readText } from "../external/index.ts";
 import { confirmedOf, type VaultFile, vaultFileOf } from "../registry/index.ts";
 
-export const VAULT_FILE = "ganglions.yaml";
+export const VAULT_FILE = "pinakes.yaml";
 
 export interface Loaded {
   readonly file: VaultFile;

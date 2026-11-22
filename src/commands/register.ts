@@ -2,7 +2,7 @@ import { type App, type FuzzyMatch, FuzzySuggestModal } from "obsidian";
 import { attempt, say } from "../notice.ts";
 import type { Candidate } from "../registry/index.ts";
 import { FolderPrompt } from "./folder.ts";
-import type { Ganglions } from "./store.ts";
+import type { Pinakes } from "./store.ts";
 
 interface Source {
   readonly label: string;
@@ -10,13 +10,13 @@ interface Source {
 }
 
 function noteOf({ manifest }: Candidate): string {
-  return manifest ? "◉ ganglion.yaml" : "no ganglion.yaml: foreign?";
+  return manifest ? "◉ pinax.yaml" : "no pinax.yaml: foreign?";
 }
 
 class CandidatePicker extends FuzzySuggestModal<Candidate> {
   constructor(
     app: App,
-    private readonly store: Ganglions,
+    private readonly store: Pinakes,
     private readonly candidates: readonly Candidate[],
   ) {
     super(app);
@@ -52,7 +52,7 @@ class SourcePicker extends FuzzySuggestModal<Source> {
     private readonly sources: readonly Source[],
   ) {
     super(app);
-    this.setPlaceholder("Register a ganglion from…");
+    this.setPlaceholder("Register a pinax from…");
   }
 
   getItems(): Source[] {
@@ -68,7 +68,7 @@ class SourcePicker extends FuzzySuggestModal<Source> {
   }
 }
 
-async function fromExternal(app: App, store: Ganglions): Promise<void> {
+async function fromExternal(app: App, store: Pinakes): Promise<void> {
   const candidates = await store.candidates();
   if (candidates.length === 0) {
     throw new Error("nothing new in external/");
@@ -76,11 +76,11 @@ async function fromExternal(app: App, store: Ganglions): Promise<void> {
   new CandidatePicker(app, store, candidates).open();
 }
 
-function fromDisk(app: App, store: Ganglions): void {
+function fromDisk(app: App, store: Pinakes): void {
   new FolderPrompt(app, store).open();
 }
 
-export function registerGanglion(app: App, store: Ganglions): void {
+export function registerPinax(app: App, store: Pinakes): void {
   const sources: readonly Source[] = [
     { label: "external/: an entry already there", run: () => fromExternal(app, store) },
     { label: "disk: a folder, linked into external/", run: () => fromDisk(app, store) },

@@ -1,4 +1,4 @@
-// A ganglion's own folder, read on the person's demand. A link found inside is
+// A pinax's own folder, read on the person's demand. A link found inside is
 // not followed, so a loop cannot run forever.
 import type { Dirent } from "node:fs";
 import { readdir } from "node:fs/promises";

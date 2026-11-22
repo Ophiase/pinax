@@ -3,8 +3,8 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { candidatesOf, type Probe, rowsOf, stateOf } from "../src/registry/index.ts";
 
-test("a confirmed, resolving entry is ready, ganglion.yaml or not", () => {
-  assert.equal(stateOf("ganglion", true), "ready");
+test("a confirmed, resolving entry is ready, pinax.yaml or not", () => {
+  assert.equal(stateOf("pinax", true), "ready");
   assert.equal(stateOf("other", true), "ready");
 });
 
@@ -18,12 +18,12 @@ test("a confirmed dead link is broken", () => {
 });
 
 test("an entry the register does not name is unconfirmed", () => {
-  assert.equal(stateOf("ganglion", false), "unconfirmed");
+  assert.equal(stateOf("pinax", false), "unconfirmed");
   assert.equal(stateOf("dangling", false), "unconfirmed");
 });
 
 test("rows follow the vault, sources kept", () => {
-  const probes = new Map<string, Probe>([["a", "ganglion"]]);
+  const probes = new Map<string, Probe>([["a", "pinax"]]);
   const rows = rowsOf([{ name: "a", source: "s" }, { name: "b" }], ["a"], probes);
   assert.deepEqual(rows, [
     { name: "a", source: "s", state: "ready" },
@@ -32,17 +32,17 @@ test("rows follow the vault, sources kept", () => {
 });
 
 const ENTRIES = new Map<string, Probe>([
-  ["z", "ganglion"],
+  ["z", "pinax"],
   ["b", "other"],
-  ["a", "ganglion"],
-  ["tracked", "ganglion"],
+  ["a", "pinax"],
+  ["tracked", "pinax"],
   [".git", "other"],
   ["dead", "dangling"],
 ]);
 
 const nameOf = ({ name }: { name: string }) => name;
 
-test("candidates: visible, untracked, resolving; ganglions first", () => {
+test("candidates: visible, untracked, resolving; pinakes first", () => {
   const candidates = candidatesOf(ENTRIES, [{ name: "tracked" }]);
   assert.deepEqual(candidates.map(nameOf), ["a", "z", "b"]);
 });

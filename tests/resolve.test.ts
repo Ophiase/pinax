@@ -7,8 +7,8 @@ const VAULT = "/disk/parent/vault";
 const NOTE = "a/b/c/note.md";
 
 test("a link out of the vault resolves from the note's folder", () => {
-  const target = outsideTarget(VAULT, NOTE, "../../../../external/ganglion/README.md");
-  assert.equal(target, "/disk/parent/external/ganglion/README.md");
+  const target = outsideTarget(VAULT, NOTE, "../../../../external/pinax/README.md");
+  assert.equal(target, "/disk/parent/external/pinax/README.md");
 });
 
 test("a link inside the vault is left alone", () => {

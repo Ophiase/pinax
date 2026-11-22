@@ -1,10 +1,10 @@
 // What the vault tracks beside what external/ holds: the state of each
-// ganglion, and the entries that could become one.
+// pinax, and the entries that could become one.
 import { isEntryName, type Tracked } from "./files.ts";
 import { byText } from "./yaml.ts";
 
-/** An entry of external/, by name: a ganglion, anything else, a dead link. */
-export type Probe = "ganglion" | "other" | "dangling" | "none";
+/** An entry of external/, by name: a pinax, anything else, a dead link. */
+export type Probe = "pinax" | "other" | "dangling" | "none";
 
 export type State = "ready" | "absent" | "broken" | "unconfirmed";
 
@@ -29,10 +29,10 @@ export function stateOf(probe: Probe, confirmed: boolean): State {
   return probe === "dangling" ? "broken" : "ready";
 }
 
-function rowOf(ganglion: Tracked, here: ReadonlySet<string>, probes: Probes): Row {
-  const probe = probes.get(ganglion.name) ?? "none";
-  const confirmed = here.has(ganglion.name);
-  return { ...ganglion, state: stateOf(probe, confirmed) };
+function rowOf(pinax: Tracked, here: ReadonlySet<string>, probes: Probes): Row {
+  const probe = probes.get(pinax.name) ?? "none";
+  const confirmed = here.has(pinax.name);
+  return { ...pinax, state: stateOf(probe, confirmed) };
 }
 
 export function rowsOf(
@@ -41,28 +41,28 @@ export function rowsOf(
   probes: Probes,
 ): Row[] {
   const here = new Set(confirmed);
-  return tracked.map((ganglion) => rowOf(ganglion, here, probes));
+  return tracked.map((pinax) => rowOf(pinax, here, probes));
 }
 
 function resolves(probe: Probe): boolean {
-  return probe === "ganglion" || probe === "other";
+  return probe === "pinax" || probe === "other";
 }
 
-function ganglionsFirst(left: Candidate, right: Candidate): number {
+function pinakesFirst(left: Candidate, right: Candidate): number {
   if (left.manifest === right.manifest) {
     return byText(left.name, right.name);
   }
   return left.manifest ? -1 : 1;
 }
 
-/** Entries of external/ the vault does not track yet, ganglions first. */
+/** Entries of external/ the vault does not track yet, pinakes first. */
 export function candidatesOf(probes: Probes, tracked: readonly Tracked[]): Candidate[] {
   const known = new Set(tracked.map(({ name }) => name));
   const candidates: Candidate[] = [];
   for (const [name, probe] of probes) {
     if (isEntryName(name) && !known.has(name) && resolves(probe)) {
-      candidates.push({ name, manifest: probe === "ganglion" });
+      candidates.push({ name, manifest: probe === "pinax" });
     }
   }
-  return candidates.sort(ganglionsFirst);
+  return candidates.sort(pinakesFirst);
 }

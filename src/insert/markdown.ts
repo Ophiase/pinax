@@ -1,8 +1,8 @@
-// The markdown written into a note: a link, or a ganglion's notes as a list
+// The markdown written into a note: a link, or a pinax's notes as a list
 // of links, all relative to the note's folder.
 import { basename, extname, sep } from "node:path";
 
-/** A file or a folder of a ganglion, its path relative to the ganglion. */
+/** A file or a folder of a pinax, its path relative to the pinax. */
 export interface Node {
   readonly name: string;
   readonly path: string;
@@ -16,7 +16,7 @@ function segmentOf(segment: string): string {
   return encoded.replace(/\(/g, "%28").replace(/\)/g, "%29");
 }
 
-/** `base`, from the note's folder to the ganglion, then `path` inside it. */
+/** `base`, from the note's folder to the pinax, then `path` inside it. */
 export function hrefOf(base: string, path: string): string {
   const segments = [...base.split(sep), ...path.split(sep)];
   const kept = segments.filter((segment) => segment !== "" && segment !== ".");

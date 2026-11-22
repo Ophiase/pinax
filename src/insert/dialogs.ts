@@ -10,7 +10,7 @@ import type { Choose } from "../commands/index.ts";
 import { attempt } from "../notice.ts";
 import type { Node } from "./markdown.ts";
 
-/** One way to link a ganglion: its door, its tree, one of its notes. */
+/** One way to link a pinax: its door, its tree, one of its notes. */
 export interface Mode {
   readonly label: string;
   readonly run: () => unknown;
@@ -45,7 +45,7 @@ export class NotePicker extends FuzzySuggestModal<Node> {
     private readonly choose: Choose<Node>,
   ) {
     super(app);
-    this.setPlaceholder("Link a note of the ganglion");
+    this.setPlaceholder("Link a note of the pinax");
   }
 
   getItems(): Node[] {
